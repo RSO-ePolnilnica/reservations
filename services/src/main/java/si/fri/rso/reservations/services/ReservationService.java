@@ -2,10 +2,10 @@ package si.fri.rso.reservations.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import si.fri.rso.reservations.models.entities.Reservation;
 import si.fri.rso.reservations.models.repositories.ReservationRepository;
+
+import java.util.Optional;
 
 @Component
 public class ReservationService {
@@ -21,4 +21,6 @@ public class ReservationService {
     public Iterable<Reservation> getAllReservations(){
         return reservationRepository.findAll();
     }
+
+    public Optional<Reservation> getReservationByID(Integer id) { return reservationRepository.findTopByStationOrderByIdDesc(id); }
 }

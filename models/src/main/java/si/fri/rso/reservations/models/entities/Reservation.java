@@ -14,7 +14,7 @@ public class Reservation {
 
     private Integer station;
 
-    private Integer user;
+    private Integer userID;
 
 
 
@@ -37,11 +37,11 @@ public class Reservation {
     }
 
     public Integer getUser() {
-        return user;
+        return userID;
     }
 
     public void setUser(Integer user) {
-        this.user = user;
+        this.userID = user;
     }
 
     public Date getDate() {
