@@ -119,7 +119,7 @@ spec:
       app: reservations-deployment
   strategy:
     rollingUpdate:
-      maxSurge: 25%
+      maxSurge: 0
       maxUnavailable: 25%
     type: RollingUpdate
   template:
@@ -149,11 +149,11 @@ spec:
           name: reservations-1
           resources:
             limits:
-              cpu: 500m
+              cpu: 100m
               ephemeral-storage: 1Gi
               memory: 2Gi
             requests:
-              cpu: 500m
+              cpu: 100m
               ephemeral-storage: 1Gi
               memory: 2Gi
           securityContext:
