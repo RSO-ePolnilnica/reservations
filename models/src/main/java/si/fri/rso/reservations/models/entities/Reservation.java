@@ -16,8 +16,6 @@ public class Reservation {
 
     private Integer userID;
 
-
-
     private Date date;
 
     public Integer getId() {

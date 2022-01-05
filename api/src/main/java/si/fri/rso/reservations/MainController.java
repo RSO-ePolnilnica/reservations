@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import si.fri.rso.reservations.models.entities.Reservation;
+import si.fri.rso.reservations.models.entities.ReservationTemp;
 import si.fri.rso.reservations.models.entities.Station;
 import si.fri.rso.reservations.services.ReservationService;
 import si.fri.rso.reservations.services.StationService;
@@ -17,9 +18,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 
-@RestController // This means that this class is a Controller
-//@RequestMapping(path="/reservations") // This means URL's start with /demo (after Application path)
+@RestController
 @RefreshScope
+@CrossOrigin(origins = "http://localhost:4200")
 public class MainController {
 
     @Value("${allowReservation:true}")
@@ -37,15 +38,12 @@ public class MainController {
     }
 
     @PostMapping(path="/reservations/add") // Map ONLY POST Requests
-    public @ResponseBody ResponseEntity addReservation (@RequestParam Integer stID, @RequestParam Integer uID, @RequestParam double lon) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
+    public @ResponseBody ResponseEntity addReservation (@RequestBody ReservationTemp reservationTemp) {
         if(canReserve == false){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        Optional<Station> r = stationService.getStationByID(stID);
+        Optional<Station> r = stationService.getStationByID(reservationTemp.station);
         Station s = r.get();
         if(s.isReserved()){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -53,8 +51,8 @@ public class MainController {
         s.setReserved(true);
 
         Reservation n = new Reservation();
-        n.setStation(stID);
-        n.setUser(uID);
+        n.setStation(reservationTemp.station);
+        n.setUser(reservationTemp.userID);
         n.setDate();
         reservationService.addReservation(n);
 
