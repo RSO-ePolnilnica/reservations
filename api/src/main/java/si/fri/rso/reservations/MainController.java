@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RefreshScope
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://frontend-t4vmtoqorq-ew.a.run.app")
 public class MainController {
 
     @Value("${allowReservation:true}")
